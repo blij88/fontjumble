@@ -51,7 +51,7 @@ namespace letter_scrambler
         {
             try
             {
-                StreamReader sr = new StreamReader("C:\\Users\\Fenna\\Documents\\test.txt");
+                StreamReader sr = new StreamReader("enter document path here must be .txt");
                 line = sr.ReadLine();
 
 
