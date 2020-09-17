@@ -15,7 +15,7 @@ namespace letter_scrambler
     {
         string line;      
             string[] fonts = new string[] {"Arial","Courier New","Helvetica","Tahoma","Palatino","Times New Roman","Courier","Comic Sans MS","Impact"};
-        bool button1Clicked = false;
+        string nameOfFile = "test.txt";
         
         public Form1()
         {
@@ -25,33 +25,32 @@ namespace letter_scrambler
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (button1Clicked == false)
+            richTextBox1.Clear();
+            if (nameOfFile == "test.txt")
             {
-                generateText();
-                button1Clicked = true;
+                richTextBox1.Text = "please select a file first";
+                
             }
             else
             {
+            generateText(nameOfFile);
             mixFonts(fonts);
             }
 
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
 
         }
+
 
         private void richTextBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
         // reads what's in the linked .txt document en puts it in the textbox
-        public void generateText()
+        public void generateText(string filename)
         {
             try
             {
-                StreamReader sr = new StreamReader("enter document path here must be .txt");
+                StreamReader sr = new StreamReader(filename);
                 line = sr.ReadLine();
 
 
@@ -80,6 +79,29 @@ namespace letter_scrambler
                 richTextBox1.SelectionFont = new Font(fonts[rand.Next(0, fonts.Length)], 12, FontStyle.Regular);
             }
 
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+        // file select and returning filename
+        private void fileSelect_Click(object sender, EventArgs e)
+        {
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string selectedFile = openFileDialog1.FileName;
+                string type = selectedFile.Substring((selectedFile.Length - 3), 3);
+                if (type == "txt")
+                {
+                    nameOfFile = selectedFile;
+                }
+                else
+                {
+                    richTextBox1.Text = "file must be a .txt file";
+                }
+            }
         }
     }
 }
