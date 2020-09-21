@@ -14,7 +14,7 @@ namespace letter_scrambler
     public partial class Form1 : Form
     {
         string line;      
-            string[] fonts = new string[] {"Arial","Courier New","Helvetica","Tahoma","Palatino","Times New Roman","Courier","Comic Sans MS","Impact"};
+        string[] fonts = new string[] {"Arial","Courier New","Helvetica","Tahoma","Palatino","Times New Roman","Courier","Comic Sans MS","Impact"};
         string nameOfFile = "test.txt";
         
         public Form1()
@@ -25,16 +25,14 @@ namespace letter_scrambler
 
         private void button1_Click(object sender, EventArgs e)
         {
-            richTextBox1.Clear();
             if (nameOfFile == "test.txt")
             {
-                richTextBox1.Text = "please select a file first";
+                mixFonts();
                 
             }
             else
             {
-            generateText(nameOfFile);
-            mixFonts(fonts);
+            mixFonts();
             }
 
 
@@ -48,6 +46,7 @@ namespace letter_scrambler
         // reads what's in the linked .txt document en puts it in the textbox
         public void generateText(string filename)
         {
+            richTextBox1.Clear();
             try
             {
                 StreamReader sr = new StreamReader(filename);
@@ -69,7 +68,7 @@ namespace letter_scrambler
             }
         }
 // changes the font of given text
-        public void mixFonts(string[] fonts)
+        public void mixFonts()
         {
                 Random rand = new Random();
             for (int i = 0; i < richTextBox1.TextLength; i++)
@@ -85,7 +84,7 @@ namespace letter_scrambler
         {
 
         }
-        // file select and returning filename
+        // file select, and text is added
         private void fileSelect_Click(object sender, EventArgs e)
         {
 
@@ -96,12 +95,21 @@ namespace letter_scrambler
                 if (type == "txt")
                 {
                     nameOfFile = selectedFile;
+                    generateText(nameOfFile);
                 }
                 else
                 {
                     richTextBox1.Text = "file must be a .txt file";
                 }
+
             }
+        }
+
+
+        private void richTextBox1_DoubleClick(object sender, EventArgs e)
+        {
+            richTextBox1.Clear();
+            richTextBox1.Font = new Font("Microsoft Sans Serif", 12, FontStyle.Regular);
         }
     }
 }
